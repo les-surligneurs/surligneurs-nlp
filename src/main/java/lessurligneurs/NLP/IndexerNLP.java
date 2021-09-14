@@ -8,6 +8,7 @@ import org.apache.lucene.index.IndexWriterConfig;
 import org.apache.lucene.store.Directory;
 import org.apache.lucene.store.RAMDirectory;
 
+import lessurligneurs.DAO.Commentaire;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -70,7 +71,6 @@ public class IndexerNLP {
 
     private void indexeDoc(String s){
         Document doc = new Document();
-        //TODO: Indexer tous les champs de l'objet
         doc.add(new TextField(fieldname,s, Field.Store.YES));
         try {
             writer.addDocument(doc);
@@ -79,10 +79,10 @@ public class IndexerNLP {
         }
     }
 
-    public void indexeDocs(List<String> strs){
+    public void indexeDocs(List<Commentaire> strs){
         if(strs.size() == 0) closeWriter();
-        for (String s: strs) {
-            indexeDoc(s);
+        for (Commentaire s: strs) {
+            indexeDoc(s.get_titre());
         }
         closeWriter();
     }
