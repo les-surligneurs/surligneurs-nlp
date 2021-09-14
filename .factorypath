@@ -1,0 +1,16 @@
+<factorypath>
+    <factorypathentry kind="VARJAR" id="M2_REPO/org/apache/lucene/lucene-core/7.4.0/lucene-core-7.4.0.jar" enabled="true" runInBatchMode="false"/>
+    <factorypathentry kind="VARJAR" id="M2_REPO/org/apache/lucene/lucene-analyzers-opennlp/7.4.0/lucene-analyzers-opennlp-7.4.0.jar" enabled="true" runInBatchMode="false"/>
+    <factorypathentry kind="VARJAR" id="M2_REPO/org/apache/opennlp/opennlp-maxent/3.0.3/opennlp-maxent-3.0.3.jar" enabled="true" runInBatchMode="false"/>
+    <factorypathentry kind="VARJAR" id="M2_REPO/org/apache/lucene/lucene-queryparser/7.4.0/lucene-queryparser-7.4.0.jar" enabled="true" runInBatchMode="false"/>
+    <factorypathentry kind="VARJAR" id="M2_REPO/org/apache/lucene/lucene-queries/7.4.0/lucene-queries-7.4.0.jar" enabled="true" runInBatchMode="false"/>
+    <factorypathentry kind="VARJAR" id="M2_REPO/org/apache/lucene/lucene-sandbox/7.4.0/lucene-sandbox-7.4.0.jar" enabled="true" runInBatchMode="false"/>
+    <factorypathentry kind="VARJAR" id="M2_REPO/org/apache/lucene/lucene-analyzers-common/7.4.0/lucene-analyzers-common-7.4.0.jar" enabled="true" runInBatchMode="false"/>
+    <factorypathentry kind="VARJAR" id="M2_REPO/org/apache/logging/log4j/log4j-api/2.6.1/log4j-api-2.6.1.jar" enabled="true" runInBatchMode="false"/>
+    <factorypathentry kind="VARJAR" id="M2_REPO/org/apache/logging/log4j/log4j-core/2.6.1/log4j-core-2.6.1.jar" enabled="true" runInBatchMode="false"/>
+    <factorypathentry kind="VARJAR" id="M2_REPO/org/apache/opennlp/opennlp-tools/1.9.3/opennlp-tools-1.9.3.jar" enabled="true" runInBatchMode="false"/>
+    <factorypathentry kind="VARJAR" id="M2_REPO/org/apache/lucene/lucene-highlighter/7.4.0/lucene-highlighter-7.4.0.jar" enabled="true" runInBatchMode="false"/>
+    <factorypathentry kind="VARJAR" id="M2_REPO/org/apache/lucene/lucene-join/7.4.0/lucene-join-7.4.0.jar" enabled="true" runInBatchMode="false"/>
+    <factorypathentry kind="VARJAR" id="M2_REPO/org/apache/lucene/lucene-memory/7.4.0/lucene-memory-7.4.0.jar" enabled="true" runInBatchMode="false"/>
+    <factorypathentry kind="VARJAR" id="M2_REPO/postgresql/postgresql/9.1-901-1.jdbc4/postgresql-9.1-901-1.jdbc4.jar" enabled="true" runInBatchMode="false"/>
+</factorypath>

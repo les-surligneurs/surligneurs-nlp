@@ -1,5 +1,7 @@
 package lessurligneurs;
 
+
+import lessurligneurs.DAO.* ; 
 import lessurligneurs.NLP.OpenNLPAnalyzer;
 import lessurligneurs.NLP.IndexerNLP;
 import lessurligneurs.NLP.SearcherNLP;
@@ -35,6 +37,9 @@ public enum App{
     }
 
     private void run(String[] args) throws IOException {
+        CommentaireDAO commentaires = new CommentaireDAO();
+        List<Commentaire> a = commentaires.get_all_Commentaires() ; 
+
         final String text = "  Selon Xavier Bertrand,“aujourd’hui, quand une personne est condamnée à moins de deux ans d’emprisonnement, elle ne va pas en prison”\n";
         final String text2 = " Belgique : Tom Van Grieken promet de “présenter la facture à tous ces enseignants de gauche”";
         final String text3 = " Vladimir Poutine craint que des terroristes ne se cachent parmi les afghans réfugiés";
