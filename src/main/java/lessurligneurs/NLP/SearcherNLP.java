@@ -1,7 +1,5 @@
 package lessurligneurs.NLP;
 
-import lessurligneurs.NLP.IndexerNLP;
-
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -25,10 +23,16 @@ public class SearcherNLP {
             this.searcher = new IndexSearcher(this.dir);
             this.qbuilder = new QueryBuilder(analyzer);
             this.queryList = new ArrayList<>();
-            this.queryList.add(qbuilder.createPhraseQuery(indexer.getFieldname(),"NPP"));
-            this.queryList.add(qbuilder.createPhraseQuery(indexer.getFieldname(),"NPP NPP"));
+            this.queryList.add(qbuilder.createPhraseQuery(indexer.getBodyfieldname(),"NPP"));
+            this.queryList.add(qbuilder.createPhraseQuery(indexer.getBodyfieldname(),"NPP NPP"));
+            this.queryList.add(qbuilder.createPhraseQuery(indexer.getBodyfieldname(),"NC NPP"));
+            this.queryList.add(qbuilder.createPhraseQuery(indexer.getBodyfieldname(),"NPP NPP NPP"));
+            this.queryList.add(qbuilder.createPhraseQuery(indexer.getBodyfieldname(), "NC NPP NPP"));
             this.tmp = new BooleanQuery.Builder()
                     .add(queryList.get(0),BooleanClause.Occur.SHOULD)
+                    .add(queryList.get(1),BooleanClause.Occur.SHOULD)
+                    .add(queryList.get(2),BooleanClause.Occur.SHOULD)
+                    .add(queryList.get(3),BooleanClause.Occur.SHOULD)
                     .add(queryList.get(1),BooleanClause.Occur.SHOULD)
                     .build();
             this.finalquery = new BooleanQuery.Builder()

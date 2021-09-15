@@ -12,11 +12,12 @@ public  void  create( ResNLP obj)
            
      try 
      {
-                PreparedStatement prepare = this.connect.prepareStatement("INSERT INTO \"resNLP\" (titrecomm, personalite , lieu ) VALUES(?, ?, ?)");
+                PreparedStatement prepare = this.connect.prepareStatement("INSERT INTO resnlp (titrecomm, personalite , lieu, namedentities) VALUES(?, ?, ?,?)");
                
                 prepare.setString(1, obj.get_title());
                 prepare.setString(2, obj.get_personalite());
                 prepare.setString(3, obj.get_lieu());
+                prepare.setString(4, obj.getEntites());
                 
                 prepare.executeUpdate();   
 
@@ -34,7 +35,7 @@ public ResNLP find(String title)
     try {
         ResultSet result = this .connect
                                 .createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_UPDATABLE)
-                                .executeQuery("SELECT * FROM \"resNLP\"  WHERE titrecom  like  " + title + "%");
+                                .executeQuery("SELECT * FROM resnlp  WHERE titrecom  like  " + title + "%");
         if(result.first())
                  objet  = new ResNLP.Builder(result.getString("titrecomm")).personalite(result.getString("personalite")).lieu(result.getString("lieu")).build();
         
@@ -51,7 +52,7 @@ public  void  update(ResNLP obj)
     {        
         this .connect    
              .createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_UPDATABLE)
-             .executeUpdate("UPDATE \"resNLP\" SET lieu = '" + obj.get_lieu() + "'"+ " WHERE titrecomm = " + obj.get_title() );} 
+             .executeUpdate("UPDATE resnlp SET lieu = '" + obj.get_lieu() + "'"+ " WHERE titrecomm = " + obj.get_title() );}
     catch (SQLException e)
     {
             e.printStackTrace();
@@ -61,7 +62,7 @@ public  void  update(ResNLP obj)
     try 
     {            this .connect    
                  .createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE,ResultSet.CONCUR_UPDATABLE)
-                 .executeUpdate( "UPDATE \"resNLP\" SET personalite = '" + obj.get_personalite() + "'"+" WHERE titrecomm = " + obj.get_title());} 
+                 .executeUpdate( "UPDATE resnlp SET personalite = '" + obj.get_personalite() + "'"+" WHERE titrecomm = " + obj.get_title());}
     catch (SQLException e)
     {
                 e.printStackTrace();
@@ -75,7 +76,7 @@ public  void delete (ResNLP obj )
     try {
             this.connect
             .createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_UPDATABLE)
-            .executeUpdate( "DELETE FROM \"resNLP\" WHERE titrecomm  = " + obj.get_title());
+            .executeUpdate( "DELETE FROM resnlp WHERE titrecomm  = " + obj.get_title());
     
         } catch (SQLException e)
         {

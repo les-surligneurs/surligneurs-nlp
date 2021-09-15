@@ -16,11 +16,14 @@ import org.apache.lucene.search.ScoreDoc;
 import org.apache.lucene.search.TopDocs;
 import org.apache.lucene.util.QueryBuilder;
 
+import java.awt.*;
 import java.io.BufferedWriter;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.StringReader;
+import java.sql.SQLException;
 import java.util.*;
+import java.util.List;
 
 public enum App{
     ENVIRONEMENT;
@@ -68,38 +71,54 @@ public enum App{
     private void run(String[] args) throws IOException {
         final String filename = "resultats";
         final String filename2 = "rejet";
-        BufferedWriter writer = new BufferedWriter(new FileWriter(filename),1);
+        BufferedWriter writer = new BufferedWriter(new FileWriter(filename), 1);
         BufferedWriter writer2 = new BufferedWriter(new FileWriter(filename2), 1);
         CommentaireDAO commentaires = new CommentaireDAO();
+        ResNLPDAO resultats = new ResNLPDAO();
         List<Commentaire> a = commentaires.get_all_Commentaires();
         OpenNLPAnalyzer analyzer = new OpenNLPAnalyzer();
         IndexerNLP indexer = new IndexerNLP(analyzer);
         indexer.indexeDocs(a);
-        SearcherNLP searcher = new SearcherNLP(indexer,analyzer,10);
+        SearcherNLP searcher = new SearcherNLP(indexer, analyzer, 80);
         TopDocs td = searcher.doSearch();
         System.out.printf("<Number of hits> %d hits\n", td.totalHits);
-        for(ScoreDoc scoreDoc: td.scoreDocs) {
+        for (ScoreDoc scoreDoc : td.scoreDocs) {
+            Set<String> res = new HashSet<>();
             Document doc = searcher.getSearcher().doc(scoreDoc.doc);
-            System.out.println();
-            TokenStream stream = analyzer.tokenStream("field", new StringReader(Arrays.toString(doc.getValues("body"))));
+            //writer.append(doc.toString());
+            TokenStream stream = analyzer.tokenStream("corps", new StringReader(Arrays.toString(doc.getValues("corps"))));
             try (stream) {
                 CharTermAttribute termAtt = stream.addAttribute(CharTermAttribute.class);
                 TypeAttribute typeAtt = stream.addAttribute(TypeAttribute.class);
                 stream.reset();
                 while (stream.incrementToken()) {
                     if (VerificationFonction(termAtt, typeAtt)) {
-
+                        res.add(termAtt.toString());
+                        //System.out.println("Here");
                         //System.out.println(termAtt.toString() + ": " + typeAtt.type());
                         writer.append(termAtt.toString()).append(": ").append(typeAtt.type()).append("\n");
-                    } else
+                    } else {
                         //System.out.println("\t\t\t" + termAtt.toString() + ": " + typeAtt.type());
                         writer2.append(termAtt.toString()).append(": ").append(typeAtt.type()).append("\n");
+                    }
                 }
-
                 stream.end();
             }
+            String[] entitestmp = res.toArray(new String[0]);
+            String finalstr = Arrays.toString(entitestmp);
+            resultats.create(new ResNLP.Builder(doc.getField("titre").stringValue()).lieu(" ").personalite(" ").entites(finalstr).build());
+
+        }
+
         writer.close();
         writer2.close();
+
+        try {
+            System.out.println("Fermeture de la connexion");
+            commentaires.connect.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 
     public static void main( String[] args ) {

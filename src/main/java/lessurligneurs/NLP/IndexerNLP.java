@@ -10,7 +10,6 @@ import org.apache.lucene.store.RAMDirectory;
 
 import lessurligneurs.DAO.Commentaire;
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.List;
 
 public class IndexerNLP {
@@ -19,11 +18,13 @@ public class IndexerNLP {
     private IndexWriterConfig conf;
     private IndexWriter writer;
 
-    public String getFieldname() {
-        return fieldname;
+    public String getBodyfieldname() {
+        return bodyfieldname;
     }
 
-    private final String fieldname = "body";
+    private final String bodyfieldname = "corps";
+    private final String titlefieldname = "titre";
+
 
     public IndexerNLP(OpenNLPAnalyzer analyzer) {
         this.analyzer = analyzer;
@@ -69,9 +70,10 @@ public class IndexerNLP {
         this.writer = writer;
     }
 
-    private void indexeDoc(String s){
+    private void indexeDoc(String titre, String corps){
         Document doc = new Document();
-        doc.add(new TextField(fieldname,s, Field.Store.YES));
+        doc.add(new TextField(titlefieldname,titre, Field.Store.YES));
+        doc.add(new TextField(bodyfieldname,corps, Field.Store.YES));
         try {
             writer.addDocument(doc);
         } catch (IOException e) {
@@ -82,9 +84,7 @@ public class IndexerNLP {
     public void indexeDocs(List<Commentaire> strs){
         if(strs.size() == 0) closeWriter();
         for (Commentaire s: strs) {
-            StringBuilder sb = new StringBuilder();
-            sb.append(s.get_titre()).append(s.get_corps());
-            indexeDoc(sb.toString());
+            indexeDoc(s.get_titre(),s.get_corps());
         }
         closeWriter();
     }

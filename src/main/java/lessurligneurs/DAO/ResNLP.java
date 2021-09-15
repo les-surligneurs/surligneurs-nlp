@@ -3,7 +3,8 @@ package lessurligneurs.DAO;
 public class ResNLP{
     private String titrecom ; 
     private String lieu  = "Aucun"; 
-    private String personalite = "Aucun"; 
+    private String personalite = "Aucun";
+    private  String  entites;
 
    
     private ResNLP (Builder builder)
@@ -11,13 +12,14 @@ public class ResNLP{
 		this.titrecom = builder.titrecom;
 		this.lieu  = builder.lieu;
 		this.personalite = builder.personalite ;
+        this.entites = builder.entites;
 	}
 
 	public static class Builder{
             private  String titrecom; 
             private  String  lieu ; 
             private  String  personalite;
-        
+            private  String  entites;
 
 
             public Builder ( String  titre)
@@ -37,6 +39,10 @@ public class ResNLP{
                 return this ; 
             } 
 
+            public Builder entites(String entites){
+                this.entites = entites;
+                return this;
+            }
             
             public ResNLP build()
             {
@@ -49,7 +55,8 @@ public class ResNLP{
     public String get_title () { return titrecom ;}
     public String get_lieu (){ return lieu; }
     public String get_personalite(){ return personalite ; }
-        
+    public String getEntites(){ return entites;}
 
-    
+
+
 }

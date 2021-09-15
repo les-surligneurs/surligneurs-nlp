@@ -11,7 +11,7 @@ public class Connector{
      * URL de connexion
      */
     
-    private static String url = "jdbc:postgresql://localhost:5432/lessrl";
+    private static String url = "jdbc:postgresql://localhost:5432/lessurligneurs";
     /**
      * Nom du user
      */
@@ -45,5 +45,13 @@ public class Connector{
             }
         }        
         return connect;    
-    }    
+    }
+
+    public void disconnect(){
+        try {
+            connect.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
 }
