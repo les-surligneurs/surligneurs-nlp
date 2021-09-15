@@ -80,11 +80,11 @@ public enum App{
                 TypeAttribute typeAtt = stream.addAttribute(TypeAttribute.class);
                 stream.reset();
                 while (stream.incrementToken()) {
-                   if(VerificationFonction(termAtt,typeAtt))
+                   if(VerificationFonction(termAtt,typeAtt)){
 
                        System.out.println(termAtt.toString() + ": " + typeAtt.type());
                        writer.append(termAtt.toString()).append(": ").append(typeAtt.type()).append("\n");
-                   else
+                   }else
                        System.out.println("\t\t\t" + termAtt.toString() + ": " + typeAtt.type());
                 }
 
@@ -92,7 +92,6 @@ public enum App{
                        
                 }
             }
-        }
         writer.close();
     }
 
