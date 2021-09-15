@@ -35,7 +35,7 @@ public class OpenNLPAnalyzer extends Analyzer {
             Tokenizer source = new OpenNLPTokenizer(
                     AttributeFactory.DEFAULT_ATTRIBUTE_FACTORY, sentenceDetectorOp, tokenizerOp);
 
-            POSModel posModel = OpenNLPOpsFactory.getPOSTaggerModel("model/fr-pos.bin", resourceLoader);
+            POSModel posModel = OpenNLPOpsFactory.getPOSTaggerModel("model/fr-pos-maxent.bin", resourceLoader);
             NLPPOSTaggerOp posTaggerOp = new NLPPOSTaggerOp(posModel);
 
             TokenFilter filter = new OpenNLPPOSFilter(source, posTaggerOp);
