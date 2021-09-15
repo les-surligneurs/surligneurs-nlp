@@ -25,17 +25,37 @@ import java.util.*;
 public enum App{
     ENVIRONEMENT;
 
+    private static Boolean IsUpperCase(String chaine) {
+        for (int i=0; i<chaine.length(); i++) {
+            char ch = chaine.charAt(i);
+            if (!Character.isUpperCase(ch)) return false;
+        }
+        return true;
+    }
+
     private static Boolean VerificationFonction(CharTermAttribute termAtt, TypeAttribute typeAtt) {
         List<Character> AccentList = new ArrayList<>();
         AccentList.add('\'');
         AccentList.add('`');
         AccentList.add('’');
-        final boolean upperCase = Character.isUpperCase(termAtt.toString().toCharArray()[0]);
-        if(termAtt.length() >= 3) {
+        int start = 0;
+
+        if (termAtt.charAt(0) == '[') start = 1;
+
+        final boolean upperCase = Character.isUpperCase(termAtt.toString().toCharArray()[start+0]);
+
+        if (IsUpperCase(termAtt.toString())) {
+            return false;
+        }
+        else if(termAtt.length() >= 3+start) {
             return ((typeAtt.type().equals("NPP") || typeAtt.type().equals("NC"))
                     && !termAtt.toString().equals("NPP") && !termAtt.toString().equals("NC") &&
-                    (upperCase && !AccentList.contains(termAtt.toString().toCharArray()[1])
-                            || AccentList.contains(termAtt.toString().toCharArray()[1]) && Character.isUpperCase(termAtt.toString().toCharArray()[2])));
+                    (upperCase && !AccentList.contains(termAtt.toString().toCharArray()[1+start])
+                            || AccentList.contains(termAtt.toString().toCharArray()[1]) && Character.isUpperCase(termAtt.toString().toCharArray()[2+start])));
+        }
+        else if(termAtt.length() < start+3 && termAtt.length() > 0) {
+            return ((typeAtt.type().equals("NPP") || typeAtt.type().equals("NC"))
+                    && !termAtt.toString().equals("NPP") && !termAtt.toString().equals("NC")) && upperCase;
         }
         return false;
     }
@@ -61,9 +81,15 @@ public enum App{
                 stream.reset();
                 while (stream.incrementToken()) {
                    if(VerificationFonction(termAtt,typeAtt))
-                       //System.out.println(termAtt.toString() + ": " + typeAtt.type());
 
+                       System.out.println(termAtt.toString() + ": " + typeAtt.type());
                        writer.append(termAtt.toString()).append(": ").append(typeAtt.type()).append("\n");
+                   else
+                       System.out.println("\t\t\t" + termAtt.toString() + ": " + typeAtt.type());
+                }
+
+                stream.end();
+                       
                 }
             }
         }
