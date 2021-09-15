@@ -16,11 +16,11 @@ import org.apache.lucene.search.ScoreDoc;
 import org.apache.lucene.search.TopDocs;
 import org.apache.lucene.util.QueryBuilder;
 
+import java.io.BufferedWriter;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.io.StringReader;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
+import java.util.*;
 
 public enum App{
     ENVIRONEMENT;
@@ -41,6 +41,8 @@ public enum App{
     }
 
     private void run(String[] args) throws IOException {
+        final String filename = "resultats";
+        BufferedWriter writer = new BufferedWriter(new FileWriter(filename),1);
         CommentaireDAO commentaires = new CommentaireDAO();
         List<Commentaire> a = commentaires.get_all_Commentaires();
         OpenNLPAnalyzer analyzer = new OpenNLPAnalyzer();
@@ -59,11 +61,13 @@ public enum App{
                 stream.reset();
                 while (stream.incrementToken()) {
                    if(VerificationFonction(termAtt,typeAtt))
-                       System.out.println(termAtt.toString() + ": " + typeAtt.type());
+                       //System.out.println(termAtt.toString() + ": " + typeAtt.type());
+
+                       writer.append(termAtt.toString()).append(": ").append(typeAtt.type()).append("\n");
                 }
-                stream.end();
             }
         }
+        writer.close();
     }
 
     public static void main( String[] args ) {

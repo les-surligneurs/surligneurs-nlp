@@ -27,13 +27,9 @@ public class SearcherNLP {
             this.queryList = new ArrayList<>();
             this.queryList.add(qbuilder.createPhraseQuery(indexer.getFieldname(),"NPP"));
             this.queryList.add(qbuilder.createPhraseQuery(indexer.getFieldname(),"NPP NPP"));
-            this.queryList.add(qbuilder.createPhraseQuery(indexer.getFieldname(),"NC NPP"));
-            //this.queryList.add(qbuilder.createPhraseQuery(indexer.getFieldname(),"NC NPP NPP"));
             this.tmp = new BooleanQuery.Builder()
                     .add(queryList.get(0),BooleanClause.Occur.SHOULD)
                     .add(queryList.get(1),BooleanClause.Occur.SHOULD)
-                    .add(queryList.get(2),BooleanClause.Occur.SHOULD)
-              //      .add(queryList.get(3),BooleanClause.Occur.SHOULD)
                     .build();
             this.finalquery = new BooleanQuery.Builder()
                     .add(tmp, BooleanClause.Occur.MUST)
