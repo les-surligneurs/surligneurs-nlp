@@ -82,7 +82,9 @@ public class IndexerNLP {
     public void indexeDocs(List<Commentaire> strs){
         if(strs.size() == 0) closeWriter();
         for (Commentaire s: strs) {
-            indexeDoc(s.get_titre());
+            StringBuilder sb = new StringBuilder();
+            sb.append(s.get_titre()).append(s.get_corps());
+            indexeDoc(sb.toString());
         }
         closeWriter();
     }
