@@ -11,7 +11,7 @@ public class Connector{
      * URL de connexion
      */
     
-    private static String url = "jdbc:postgresql://localhost:5432/lessurligneurs";
+    private static String url = "jdbc:postgresql://localhost:5432/lessrl";
     /**
      * Nom du user
      */

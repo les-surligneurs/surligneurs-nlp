@@ -94,12 +94,10 @@ public enum App{
                     } else
                         //System.out.println("\t\t\t" + termAtt.toString() + ": " + typeAtt.type());
                         writer2.append(termAtt.toString()).append(": ").append(typeAtt.type()).append("\n");
-
                 }
 
                 stream.end();
             }
-        }
         writer.close();
         writer2.close();
     }
