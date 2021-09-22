@@ -18,10 +18,6 @@ public class IndexerNLP {
     private IndexWriterConfig conf;
     private IndexWriter writer;
 
-    public String getBodyfieldname() {
-        return bodyfieldname;
-    }
-
     private final String bodyfieldname = "corps";
     private final String titlefieldname = "titre";
 
@@ -70,6 +66,10 @@ public class IndexerNLP {
         this.writer = writer;
     }
 
+    public String getTitlefieldname() {return titlefieldname;}
+
+    public String getBodyfieldname() {return bodyfieldname;}
+
     private void indexeDoc(String titre, String corps){
         Document doc = new Document();
         doc.add(new TextField(titlefieldname,titre, Field.Store.YES));
@@ -84,7 +84,7 @@ public class IndexerNLP {
     public void indexeDocs(List<Commentaire> strs){
         if(strs.size() == 0) closeWriter();
         for (Commentaire s: strs) {
-            indexeDoc(s.get_titre(),s.get_corps());
+            indexeDoc(s.get_titre(),s.get_titre() + s.get_resume() + s.get_corps());
         }
         closeWriter();
     }
